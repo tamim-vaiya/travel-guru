@@ -8,14 +8,18 @@ import {
   Link
 } from "react-router-dom";
 import Header from './components/Header/Header';
+import "firebase/auth";
+import Home from './components/Home/Home';
+import Booking from './components/Booking/Booking';
 
 function App() {
+  
   return (
-    <>
+    <div className="bg">
     <Router>
-      <Header/>
+      <Booking></Booking>
     </Router>
-    </>
+    </ div>
   );
 }
 

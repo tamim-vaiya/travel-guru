@@ -1,0 +1,43 @@
+  
+.homeArea{
+  background-position:center;
+  background-size: cover;
+  width: 100%;
+  height: 110vh;
+}
+.placeImg img{
+  width: 270px;
+  margin: 15px;
+  position: relative;
+}
+.travelMenu{
+  margin-top: 65px;
+}
+.placeDetail{
+  color: #FFFFFF;
+}
+.placeDetail h1{
+  font-size: 60px;
+  font-weight: 700;
+}
+.placeDetail p{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: justify;
+  margin: 20px 0;
+}
+.bookingBtn{
+  padding: 12px 29px;
+  width: 161px;
+  height: 48px;
+  background: #F9A51A;
+  border-radius: 5px;
+}
+.placeName{
+  position: absolute;
+  top: 83%;
+  margin-left: 30px;
+  color: #fff;
+}
