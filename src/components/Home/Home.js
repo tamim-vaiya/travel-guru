@@ -6,7 +6,7 @@ import Header from '../Header/Header';
 
 const Home = () => {
   return (
-    <div className="homeArea">
+    <div className="homeArea bg">
       <div className="header">
         <Header></Header>
       </div>

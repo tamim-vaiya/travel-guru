@@ -4,7 +4,7 @@ import './SearchPage.css';
 
 const SearchPage = () => {
   return (
-    <div className="searched">
+    <div className="searched whiteBg">
 
       <div className="header">
         <AnotherHeader></AnotherHeader>

@@ -18,7 +18,7 @@ import ComingSoon from './components/ComingSoon/ComingSoon';
 function App() {
   
   return (
-    <div className="bg">
+    <div >
     <Router>
       <Switch>
 

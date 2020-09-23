@@ -1,10 +1,13 @@
 import React from 'react';
+import './NotFound.css';
 
 const NotFound = () => {
   return (
-    <div>
-      <h1>this page naiga</h1>
-      <h4>404 oise monoy</h4>
+    <div className="whiteBg">
+      <div className="alignment1">
+        <h1>Something is wrong</h1>
+        <h4>404 Error!!!</h4>
+      </div>
     </div>
   );
 };

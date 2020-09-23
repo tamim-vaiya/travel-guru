@@ -1,19 +1,17 @@
-.form_wrapper{
-  margin-top: 30px;
+.login-field{
+  margin-top: 130px;
+  margin-left:200px;
 }
-.loginBg{
-  background:white;
-}
-.log_form{
+
+.form{
   padding: 20px;
   width: 570px;
-  /* height: 500px; */
   background: rgba(255, 255, 255, 0.11);
   border: 1px solid #ABABAB;
   box-sizing: border-box;
   border-radius: 4px;
 }
-.form_border{
+.inputField{
   background:none;
   border:none;
   outline: none;
@@ -22,61 +20,42 @@
   padding-bottom: 15px;
   margin-top: 40px;
 }
-.form_border::placeholder{
+.inputField::placeholder{
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
   color: #525252;
 }
-.log_form h4{
+.form h4{
   color: #000000;
   font-weight: 700;
 }
-.forgot{
-  margin-top: 30px;
+.extraDeeds label{
+  color: black;
 }
-.forgot label{
-  color: #ffff;
-  font-size: 16px;
-}
-.submit_btn{
+.logOrCreateBtn{
+  border: none;
   padding: 14px 210px;
   width: 461px;
   height: 50px;
   background: #F9A51A;
   margin:auto;
 }
-.login_btn{
-  margin-top: 30px;
+.forgotPassword{
+  color: #F9A51A!important;
 }
-.password{
-  color: white;
-  font-size: 16px;
+.forgotPassword:hover{
+  color: #F9A51A;
 }
-.password:hover{
-  color: white;
-  text-decoration: none;
-}
-.span_link{
+.checkingNewOrOld{
   margin-top: 20px;
   font-size: 18px;
 }
-.form_bottom{
-  margin: 20px;
+.spanText{
+  color: #F9A51A;
 }
-.form_bottom span{
-  background:#AAAAAA;
-  height: 1px;
-  line-height: 40px;
-  width: 200px;
-  margin: 5px;
-}
-.form_bottom h6{
-  color:#ffffff;
-  margin: 5px;
-}
-.fb-btn{
+.fancyBtn{
   width: 461px;
   height: 51px;
   background: #FFFFFF;
@@ -85,6 +64,7 @@
   border-radius: 57px;
   margin-top: 10px;
 }
-.fbToGoogle{
-  margin-left: 20px;
+.signUpWithFbOrGoogle{
+  display: block;
+  margin-left: 310px;
 }

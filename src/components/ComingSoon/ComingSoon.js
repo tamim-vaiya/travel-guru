@@ -1,9 +1,12 @@
 import React from 'react';
+import AnotherHeader from '../AnotherHeader/AnotherHeader';
+import './ComingSoon.css';
 
 const ComingSoon = () => {
   return (
-    <div>
-      <h1>this page is under constraction</h1>
+    <div className="whiteBg">
+      <AnotherHeader></AnotherHeader>
+      <h1 className="alignment">This page is under construction...</h1>
     </div>
   );
 };
