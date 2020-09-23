@@ -210,7 +210,6 @@ const Login = () => {
 
             <h3  className="d-flex align-items-center justify-content-center ">---------- Or ----------</h3>
      
-
             {/* Working with google and facebook button  */}
 
             <div className='signUpWithFbOrGoogle   align-items-center justify-content-center'>
