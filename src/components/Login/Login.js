@@ -48,9 +48,10 @@ const Login = () => {
             firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
             .then(res => {
                history.replace(from);
+               verifyEmail();
                newUser.updateProfile({
                    displayName:user.name
-               })
+               });
             })
             .catch(function(error) {
                 const newUserInfo = {...user};
@@ -163,6 +164,27 @@ const Login = () => {
     //     })
     // }
 
+    // forgotPassword functionality
+    const verifyEmail = () => {
+        const user = firebase.auth().currentUser;
+
+        user.sendEmailVerification().then(function() {
+        // Email sent.
+        }).catch(function(error) {
+        // An error happened.
+        });
+    }
+
+    const forgotPassword = email =>{
+        const auth = firebase.auth();
+
+        auth.sendPasswordResetEmail(email).then(function() {
+        // Email sent.
+        }).catch(function(error) {
+        // An error happened.
+});
+    }
+
     return (
         <div className="whiteBg">
             <div >
@@ -203,7 +225,7 @@ const Login = () => {
                     :
                     <Form.Group className='extraDeeds d-flex justify-content-between'>
                         <Form.Check type="checkbox" label="Remember Me " />
-                        <Link className='forgotPassword'>Forgot Password</Link>
+                        <Link onClick={() => forgotPassword(user.email)} className='forgotPassword'>Forgot Password</Link>
                     </Form.Group>
                 }
                 {
