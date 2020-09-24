@@ -1,10 +1,21 @@
 import { Link } from '@material-ui/core';
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import { useHistory, useParams } from 'react-router-dom';
+import place from '../../FakeData/FakeData';
 import Header from '../Header/Header';
 import './Booking.css';
 
+
+
 const Booking = () => {
+  const history = useHistory()
+  const handleBooking = () => {
+    history.push('/SearchPage');
+  }
+  const {Id} = useParams();
+    const booking = place.find(booking => booking.id === Id); 
+    const {name , details,origin} = booking;
   return (
     <div className="homeArea bg">
       <div className="header">
@@ -15,8 +26,8 @@ const Booking = () => {
           <div className="row d-flex align-items-center">
             <div className="col-md-6">
               <div className='placeDetail'>
-                <h1>Cox's bazar</h1>
-                <p>Cox’s Bazar is a town on the southeast coast of Bangladesh. It’s known for its very long, sandy beachfront, stretching from Sea Beach in the north to Kolatoli Beach in the south. Aggameda Khyang monastery is home to bronze statues and centuries-old Buddhist manuscripts. South of town, the tropical rainforest of Himchari National Park has waterfalls and many birds. North, sea turtles breed on nearby Sonadia Island.</p>
+                <h1>{name}</h1>
+                <p>{details}</p>
               </div>
             </div>
 
@@ -24,9 +35,9 @@ const Booking = () => {
               <div className='bookingForm'>
                 <Form.Group>
                   <label>Origin</label>
-                  <Form.Control className='originAndDestination' type="text" placeholder='{origin}' disabled />
+                  <Form.Control className='originAndDestination' type="text" placeholder={origin} disabled />
                   <label>Destination</label>
-                  <Form.Control className='originAndDestination' type="text" placeholder='{name}' disabled />
+                  <Form.Control className='originAndDestination' type="text" placeholder={name} disabled />
                   <div className='d-flex justify-content-between'>
                     <label htmlFor="">Form</label>
                     <label htmlFor="">To</label>
@@ -35,7 +46,10 @@ const Booking = () => {
                     <input className='dateAndYear' type="date" />
                     <input className='dateAndYear' type="date" />
                   </div>
-                  <Link to='/destination'><button className='btn bookingBtn1'>Start Booking</button></Link>
+                  <button
+                  onClick={handleBooking}
+                  className='bookingBtn1'
+                  >Start Booking</button>
                 </Form.Group>
               </div>
             </div>

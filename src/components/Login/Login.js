@@ -1,5 +1,5 @@
 import { Link } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -8,91 +8,22 @@ import './Login.css';
 import google from '../../images/Icon/google.png';
 import fb from '../../images/Icon/fb.png';
 import firebaseConfig from './firebase.config';
+import { UserContext } from '../../App';
+import { useHistory, useLocation } from 'react-router-dom';
 
 firebase.initializeApp(firebaseConfig);
 
 const Login = () => {
+    const [user, setUser] = useContext(UserContext);
     const [newUser, setNewUser] = useState(false);
-    const [user, setUser] = useState({
-        isSignedIn: false,
-        name: '',
-        email: '',
-        password: ''
-    })
+    let history = useHistory();
+    let location = useLocation();
+    let { from } = location.state || { from: { pathname: "/" } };
 
-    // sign in with fb functionality
-    const fbSignIn= () => {
-        const fbProvider = new firebase.auth.FacebookAuthProvider();
-    firebase.auth().signInWithPopup(fbProvider)
-    .then(res => {
-        const { displayName, email } = res.user;
-        const signInUser = {
-            isSignedIn: true,
-            name: displayName,
-            email: email
-        }
-        setUser(signInUser);
-    })
-    .catch((error => {
-        console.log(error.message);
-      }))
-    }
-
-    // sign out with fb functionality
-    const fbSignOut = () => {
-        firebase.auth().signOut()
-        .then(res => {
-            const signedOutUser = {
-                isSignedIn : false,
-                name: '',
-                email: '',
-                error: '',
-                success: false
-            }
-            setUser(signedOutUser);
-        })
-        .catch(error => {
-
-        })
-    }
+    
 
 
-    // sign in with google functionality
-    const googleSignIn = () => {
-        const googleProvider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(googleProvider)
-            .then(res => {
-                const { displayName, email } = res.user;
-                const signInUser = {
-                    isSignedIn: true,
-                    name: displayName,
-                    email: email
-                }
-                setUser(signInUser);
-            })
-            .catch(error => {
-                console.log(error.message);
-            });
-    }
 
-
-    // sign out with google functionality
-    const googleSignOut = () => {
-        firebase.auth().signOut()
-        .then(res => {
-            const signedOutUser = {
-                isSignedIn : false,
-                name: '',
-                email: '',
-                error: '',
-                success: false
-            }
-            setUser(signedOutUser);
-        })
-        .catch(error => {
-
-        })
-    }
     // email functionality
     const handleBlur = (e) => {
         let isFieldValid = true;
@@ -113,36 +44,124 @@ const Login = () => {
 
     // submit with email functionality
     const handleSubmit = (e) => {
-        if(user.password && user.email){
+        if(newUser && user.password && user.email){
             firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
             .then(res => {
-                const newUserInfo = {...user};
-                newUserInfo.error = '';
-                newUserInfo.success = true;
-                setUser(newUserInfo);
+               history.replace(from);
+               newUser.updateProfile({
+                   displayName:user.name
+               })
             })
             .catch(function(error) {
                 const newUserInfo = {...user};
-                newUserInfo.error = error.message;
+                newUserInfo.message = error.message;
                 newUserInfo.success = false;
                 setUser(newUserInfo);
-                updateUserName(user.name);
               });
+        }
+        if(!newUser && user.email && user.password){
+            firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+            .then(res => {
+                const { displayName, email } = res.user;
+                const signInUser = {
+                    isSignedIn: true,
+                    name: displayName,
+                    email: email
+                }
+                setUser(signInUser);
+                history.replace(from);
+            })
+            .catch(error => {
+                const newUserInfo = { ...user };
+                newUserInfo.message = error.message;
+                newUserInfo.success = false;
+                setUser(newUserInfo);
+            });
         }
         e.preventDefault();
     }
 
-    const updateUserName = name => {
-        const user = firebase.auth().currentUser;
 
-        user.updateProfile({
-        displayName: name,
-        }).then(function() {
-        
-        }).catch(function(error) {
-        
-        });
+    // sign in with fb functionality
+    const fbSignIn= () => {
+        const fbProvider = new firebase.auth.FacebookAuthProvider();
+    firebase.auth().signInWithPopup(fbProvider)
+    .then(res => {
+        const { displayName, email } = res.user;
+        const signInUser = {
+            isSignedIn: true,
+            name: displayName,
+            email: email
+        }
+        setUser(signInUser);
+        history.replace(from);
+    })
+    .catch((error => {
+        const newUserInfo = {...user};
+        newUserInfo.message = error.message;
+        setUser(newUserInfo);
+      }))
     }
+
+    
+
+
+    // sign in with google functionality
+    const googleSignIn = () => {
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(googleProvider)
+            .then(res => {
+                const { displayName, email } = res.user;
+                const signInUser = {
+                    isSignedIn: true,
+                    name: displayName,
+                    email: email
+                }
+                setUser(signInUser);
+                history.replace(from);
+            })
+            .catch(error => {
+                const newUserInfo = {...user};
+                newUserInfo.message = error.message;
+                setUser(newUserInfo);
+            });
+    }
+
+    // sign out  functionality
+    const signOut = () => {
+        firebase.auth().signOut()
+        .then(res => {
+            const signedOutUser = {
+                isSignedIn : false,
+                name: '',
+                email: '',
+                error: '',
+                success: false
+            }
+            setUser(signedOutUser);
+        })
+        .catch(error => {
+
+        })
+    }
+
+    // sign out with google functionality
+    // const googleSignOut = () => {
+    //     firebase.auth().signOut()
+    //     .then(res => {
+    //         const signedOutUser = {
+    //             isSignedIn : false,
+    //             name: '',
+    //             email: '',
+    //             error: '',
+    //             success: false
+    //         }
+    //         setUser(signedOutUser);
+    //     })
+    //     .catch(error => {
+
+    //     })
+    // }
 
     return (
         <div className="whiteBg">
@@ -151,7 +170,12 @@ const Login = () => {
             </div>
 
             <div className="login-field">
-                <div className="d-flex align-items-center justify-content-center ">
+            {
+                    user.isSignedIn ?
+                        ''
+                        :
+                        
+<div className="d-flex align-items-center justify-content-center ">
                     {/* working with Personal Email */}
             <Form className='form' onSubmit={handleSubmit}>
                 {newUser ?
@@ -208,7 +232,15 @@ const Login = () => {
                 </div>
 
 
-            <h3  className="d-flex align-items-center justify-content-center ">---------- Or ----------</h3>
+                }
+            {
+                    user.isSignedIn ?
+                        ''
+                        :
+                        <h3  className="d-flex align-items-center justify-content-center ">---------- Or ----------</h3>
+                }
+
+            
      
             {/* Working with google and facebook button  */}
 
@@ -216,9 +248,12 @@ const Login = () => {
                 {/* fb btn functionality */}
                 {
                     user.isSignedIn ?
-                        <button className='fancyBtn' onClick={fbSignOut}>
+                        <div>
+                            <h4 >Now log in as {user.name || 'Unknown User!'}</h4>
+                        <button className='fancyBtn' onClick={signOut}>
                              Log Out
                         </button>
+                        </div>
                         :
                         <button className='fancyBtn' onClick={fbSignIn}>
                             <img src={fb} style={{ width: '30px', float: 'left', marginLeft: '20px' }} alt="" /> Continue with Facebook
@@ -242,5 +277,4 @@ const Login = () => {
 };
 
 export default Login;
-
 

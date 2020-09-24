@@ -1,10 +1,12 @@
-import React from 'react';
-import { Button, Form, FormControl, Nav, Navbar } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import {  Form, FormControl, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../App';
 import logo from '../../images/Logo.png';
 import './Header.css';
 
 const Header = () => {
+  const [user, setUser] = useContext(UserContext);
   return (
     <>
       <Navbar >
@@ -22,7 +24,12 @@ const Header = () => {
           <Link className="link-item" to="/comingSoon">Contact</Link>
         </Nav>
         <Nav className="ml-auto navbar-section">
-            <Link to='/login'><button className="loginBtn ">Login</button></Link>
+          {user.isSignedIn ? 
+              <Link to='/login'><button className="loginBtn ">Log Out</button></Link>
+              :
+              <Link to='/login'><button className="loginBtn ">Login</button></Link>
+          }
+            
         </Nav>
       </Navbar>
     </>
